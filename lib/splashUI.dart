@@ -8,34 +8,38 @@ import 'package:flutter/material.dart';
 
 // import 'login.dart';
 
-
-
 class SplashUI extends StatelessWidget {
-
-     Future sleep(context){
-   Future.delayed(const Duration(seconds: 3), () {
-    //  Nav().nav(Inbox(), context);            
-     Nav().nav(LoginUI2(), context);            
-
-  });
-     } 
-//   Navigator.of(context).push(MaterialPageRoute( 
+  Future sleep(context) async {
+    Future.delayed(const Duration(seconds: 3), () {
+      Nav().nav(
+          Menu(
+            add: false,
+          ),
+          context);
+      //  Nav().nav(LoginUI2(), context);
+      // Nav().nav(Inbox(name: 'Abdoullahi ‎Abdelwahheb ‎', phone: '0698782358'),
+      //     context);
+    });
+  }
+//   Navigator.of(context).push(MaterialPageRoute(
 //               builder: (BuildContext context)=> new Login()
 //           )));
 // }
-    
+
   @override
   Widget build(BuildContext context) {
-     sleep(context);
+    sleep(context);
     return Scaffold(
-    body:
-     Stack(
-       fit: StackFit.expand,
+        body: Stack(
+      fit: StackFit.expand,
       children: [
-        Image.asset("images/splash.png",fit: BoxFit.fill,),
+        Image.asset(
+          "images/splash.png",
+          fit: BoxFit.fill,
+        ),
         // Positioned(
-        //   top: MediaQuery.of(context).size.height*0.5,          
-        //   left: MediaQuery.of(context).size.width*0.15,          
+        //   top: MediaQuery.of(context).size.height*0.5,
+        //   left: MediaQuery.of(context).size.width*0.15,
         //   child:
         //   Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         //     children: [
@@ -46,18 +50,17 @@ class SplashUI extends StatelessWidget {
         //   )
         //   ),
 
-
         Positioned(
-          top: MediaQuery.of(context).size.height*0.65,
+          top: MediaQuery.of(context).size.height * 0.65,
           left: 0,
           right: 0,
-          child:
-           Image.asset("images/loading.gif",width: 200,height: 100,),
+          child: Image.asset(
+            "images/loading.gif",
+            width: 200,
+            height: 100,
           ),
-          
+        ),
       ],
-
-    )
-    );
+    ));
   }
 }

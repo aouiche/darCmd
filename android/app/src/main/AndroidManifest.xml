@@ -10,12 +10,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_SMS"/>
+    <!-- <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.READ_PROFILE"/> -->
     <!--application android:label="Admin\n ناس الخير "
         android:name="io.flutter.app.FlutterApplication"-->
     <application
@@ -24,6 +24,9 @@
         android:icon="@mipmap/ic_launcher">
      <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyDpbFtT05QWxHJa-6DfYfxnIZKF6EIwN9Q"/>
+    <meta-data
+  android:name="com.google.firebase.messaging.default_notification_channel_id"
+  android:value="high_importance_channel" />
     
         <activity
             android:name="MainActivity"
