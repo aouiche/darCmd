@@ -100,7 +100,7 @@ class _MenuState extends State<Menu> {
 
     init();
     //  if (!widget.add) {
-    dbMsg.subscribeToTopic("12345678");
+    // dbMsg.subscribeToTopic("12345678");
     initCloudMsg();
     showNotification();
     //  }
@@ -248,110 +248,168 @@ class _MenuState extends State<Menu> {
     });
 
     db.getDatagroup("donaters").then((snap) {
-      for (var item in snap.docs) {
-        donatersList.add(item.id.toString());
-        db.getData(item.id.toString(), "donaters").then((snapx) {
-          //  print("_"*100);
-          //  print("${now.day}-$mm-${now.year}");
-          //  print("_"*100);
+      if (snap != 'error') {
+        for (var item in snap.docs) {
+          donatersList.add(item.id.toString());
+          db.getData(item.id.toString(), "donaters").then((snapx) {
+            //  print("_"*100);
+            //  print("${now.day}-$mm-${now.year}");
+            //  print("_"*100);
 
-          if (snapx.get("nextPositeDate") == "${now.day}-$mm-${now.year}") {
-            //  sendSms(snapx.get("phone"), "تذكير دفع الاشتراك بجمعية ناس الخير");
-            setState(() {
-              notifNum++;
-              DLAnumber.add(snapx.get("phone"));
-              DLA.add(Card(
-                  color: Colors.white,
-                  elevation: 3.0,
-                  child: ListTile(
-                      leading: CircleAvatar(
-                        child: Icon(
-                          Icons.notifications_active,
-                          color: Colors.white,
+            if (snapx.get("nextPositeDate") == "${now.day}-$mm-${now.year}") {
+              //  sendSms(snapx.get("phone"), "تذكير دفع الاشتراك بجمعية ناس الخير");
+              setState(() {
+                notifNum++;
+                DLAnumber.add(snapx.get("phone"));
+                DLA.add(Card(
+                    color: Colors.white,
+                    elevation: 3.0,
+                    child: ListTile(
+                        leading: CircleAvatar(
+                          child: Icon(
+                            Icons.notifications_active,
+                            color: Colors.white,
+                          ),
+                          backgroundColor: Colors.blue,
                         ),
-                        backgroundColor: Colors.blue,
-                      ),
-                      title: Column(children: [
-                        Text(snapx.id,
-                            style: TextStyle(
-                                fontSize: 17.0, fontWeight: FontWeight.bold)),
-                        Text(
-                          snapx.get("phone"),
-                          style: TextStyle(fontSize: 15.0),
-                        ),
-                      ]))));
-            });
-          }
-        });
+                        title: Column(children: [
+                          Text(snapx.id,
+                              style: TextStyle(
+                                  fontSize: 17.0, fontWeight: FontWeight.bold)),
+                          Text(
+                            snapx.get("phone"),
+                            style: TextStyle(fontSize: 15.0),
+                          ),
+                        ]))));
+              });
+            }
+          });
+        }
       }
     });
 
     db.getDatagroup("newDonaters").then((snap) {
-      for (var item in snap.docs) {
-        db.getData(item.id.toString(), "newDonaters").then((snapx) {
-          setState(() {
-            notifNewDonaters++;
-            newDonatersList.add(Card(
-                color: Colors.white,
-                elevation: 3.0,
-                child: ListTile(
-                  title: Column(children: [
-                    Text(snapx.id,
-                        style: TextStyle(
-                            fontSize: 17.0, fontWeight: FontWeight.bold)),
-                    Text(
-                      snapx.get("phone"),
-                      style: TextStyle(fontSize: 15.0),
-                    ),
-                  ]),
-                  leading: InkWell(
-                    child: CircleAvatar(
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
+      if (snap != 'error') {
+        for (var item in snap.docs) {
+          db.getData(item.id.toString(), "newDonaters").then((snapx) {
+            setState(() {
+              notifNewDonaters++;
+              newDonatersList.add(Card(
+                  color: Colors.white,
+                  elevation: 3.0,
+                  child: ListTile(
+                    title: Column(children: [
+                      Text(snapx.id,
+                          style: TextStyle(
+                              fontSize: 17.0, fontWeight: FontWeight.bold)),
+                      Text(
+                        snapx.get("phone"),
+                        style: TextStyle(fontSize: 15.0),
                       ),
-                      backgroundColor: Colors.blue,
+                    ]),
+                    leading: InkWell(
+                      child: CircleAvatar(
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Colors.blue,
+                      ),
+                      onTap: () {
+                        newDonatersList.removeAt(notifNewDonaters);
+                        Map<String, dynamic> formData = {
+                          'fullName': snapx.get("fullName"),
+                          'phone': snapx.get("phone"),
+                          'positeDate': "بداية الإشتراك",
+                          'nextPositeDate': "بداية الإشتراك",
+                        };
+                        db.setData(
+                            'بداية الإشتراك',
+                            "donaters/${snapx.get("fullName")}/dates",
+                            formData);
+                        db.setData(
+                            '${snapx.get("fullName")}', "donaters", formData);
+                        db.deleteDataDoc(
+                          "newDonaters",
+                          '${snapx.get("fullName")}',
+                        );
+                        donatersList.add(snapx.get("fullName").toString());
+                        sendAndRetrieveMessage(snapx.get("phone"), "");
+                        //  sendSms(snapx.get("phone"),"تم قبول طلب الاشتراك في جمعية ناس الخير");
+                        pr.hide();
+                        pr.style(
+                            message: 'تم التسجيل بنجاح',
+                            progressWidget: Image.asset('images/done.gif'),
+                            textAlign: TextAlign.center);
+                        pr.show().then((stat) {
+                          _cfname.text = snapx.get("fullName");
+                          _cphone.text = snapx.get("phone");
+                          init();
+                          // _cpositeDate.text = "";
+                          // _cnextPositeDate.text = "";
+                          sleep();
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        });
+                      },
                     ),
-                    onTap: () {
-                      newDonatersList.removeAt(notifNewDonaters);
-                      Map<String, dynamic> formData = {
-                        'fullName': snapx.get("fullName"),
-                        'phone': snapx.get("phone"),
-                        'positeDate': "بداية الإشتراك",
-                        'nextPositeDate': "بداية الإشتراك",
-                      };
-                      db.setData('بداية الإشتراك',
-                          "donaters/${snapx.get("fullName")}/dates", formData);
-                      db.setData(
-                          '${snapx.get("fullName")}', "donaters", formData);
-                      db.deleteDataDoc(
-                        "newDonaters",
-                        '${snapx.get("fullName")}',
-                      );
-                      donatersList.add(snapx.get("fullName").toString());
-                      sendAndRetrieveMessage(snapx.get("phone"), "");
-                      //  sendSms(snapx.get("phone"),"تم قبول طلب الاشتراك في جمعية ناس الخير");
-                      pr.hide();
-                      pr.style(
-                          message: 'تم التسجيل بنجاح',
-                          progressWidget: Image.asset('images/done.gif'),
-                          textAlign: TextAlign.center);
-                      pr.show().then((stat) {
-                        _cfname.text = snapx.get("fullName");
-                        _cphone.text = snapx.get("phone");
-                        init();
-                        // _cpositeDate.text = "";
-                        // _cnextPositeDate.text = "";
-                        sleep();
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                      });
-                    },
-                  ),
-                )));
+                  )));
+            });
           });
-        });
+        }
       }
+    });
+  }
+
+  addAllNewDonaters() {
+    pr.style(
+        message: '...التسجيل ',
+        progressWidget: Image.asset('images/done.gif'),
+        textAlign: TextAlign.center);
+    pr.show().then((stat) {
+      db.getDatagroup("newDonaters").then((snap) {
+        if (snap != 'error') {
+          for (var item in snap.docs) {
+            db.getData(item.id.toString(), "newDonaters").then((snapx) {
+              setState(() {
+                Map<String, dynamic> formData = {
+                  'fullName': snapx.get("fullName"),
+                  'phone': snapx.get("phone"),
+                  'positeDate': "بداية الإشتراك",
+                  'nextPositeDate': "بداية الإشتراك",
+                };
+                db.setData('بداية الإشتراك',
+                    "donaters/${snapx.get("fullName")}/dates", formData);
+                db.setData('${snapx.get("fullName")}', "donaters", formData);
+                db.deleteDataDoc(
+                  "newDonaters",
+                  '${snapx.get("fullName")}',
+                );
+                donatersList.add(snapx.get("fullName").toString());
+                sendAndRetrieveMessage(snapx.get("phone"), "");
+                //  sendSms(snapx.get("phone"),"تم قبول طلب الاشتراك في جمعية ناس الخير");
+
+                _cfname.text = snapx.get("fullName");
+                _cphone.text = snapx.get("phone");
+                init();
+                // _cpositeDate.text = "";
+                // _cnextPositeDate.text = "";
+                sleep();
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              });
+            });
+          }
+        }
+      }).whenComplete(() {
+        newDonatersList.clear();
+        pr.hide();
+        pr.style(
+            message: 'تم التسجيل بنجاح',
+            progressWidget: Image.asset('images/done.gif'),
+            textAlign: TextAlign.center);
+        pr.show().whenComplete(() => sleep());
+      });
     });
   }
 
@@ -589,6 +647,8 @@ class _MenuState extends State<Menu> {
             textDirection: TextDirection.rtl,
             child: AlertDialog(
               contentPadding: EdgeInsets.all(0),
+              backgroundColor: Color.fromARGB(255, 36, 52, 71),
+              shape: Border.all(color: Colors.orange, width: 2),
               // elevation: 10.0,
               // titleTextStyle: TextStyle(color:Colors.white,fontSize: 30.0,fontFamily: 'Hacen'),
               // contentTextStyle: TextStyle(color:Colors.white,fontSize: 20.0,fontFamily: 'Hacen'),
@@ -631,11 +691,13 @@ class _MenuState extends State<Menu> {
                           ),
                           sms
                               ? Text(
-                                  !_checkbtn ? "إرسال للجميع" : "إرسال للفرد",
+                                  !_checkbtn
+                                      ? "    إرسال للجميع    "
+                                      : " إرسال للفرد",
                                   style: TextStyle(
                                       fontFamily: "Hacen",
                                       fontSize: 30.0,
-                                      color: Colors.black))
+                                      color: Colors.orange))
                               : Container(),
                           //     ],
                           //   ),
@@ -644,17 +706,17 @@ class _MenuState extends State<Menu> {
                               ? Container(
                                   width: 300.0,
                                   height: 60.0,
-                                  margin: EdgeInsets.only(top: 10.0),
+                                  margin: EdgeInsets.only(top: 1.0),
                                   // decoration: BoxDecoration(border:Border.all(style: BorderStyle.solid,width: 0.2,),
-                                  //                 borderRadius: BorderRadius.all(Radius.circular(50)),color: Colors.blue[50]) ,//ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
+                                  //                 borderRadius: BorderRadius.all(Radius.circular(5)),color: Colors.blue[50]) ,//ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
 
-                                  padding: EdgeInsets.all(4.0),
+                                  padding: EdgeInsets.all(7.0),
                                   child: DropdownSearch<String>(
                                     //  textDirectionSearchBox: TextDirection.rtl,
                                     showSearchBox: true,
                                     // validator: (v) => v == null ? "يرجى اختيار  الاتجاه": null,
-                                    hint: "الإسم الكامل",
-                                    mode: Mode.BOTTOM_SHEET,
+                                    // label: "الإسم الكامل",
+                                    mode: Mode.DIALOG,
                                     showSelectedItem: true,
                                     items: donatersList,
                                     popupItemBuilder:
@@ -663,7 +725,7 @@ class _MenuState extends State<Menu> {
                                           child: Container(
                                         height:
                                             MediaQuery.of(context).size.height *
-                                                0.07,
+                                                0.04,
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.9,
@@ -702,6 +764,7 @@ class _MenuState extends State<Menu> {
                                         donater = newValue.toString();
                                       });
                                     },
+
                                     // popupItemDisabled: (String s) => s.startsWith('I'),
                                     selectedItem: donater,
                                   ),
@@ -717,7 +780,7 @@ class _MenuState extends State<Menu> {
                                   //   //textDirection: widget.lang == 'arb'?TextDirection.rtl:TextDirection.ltr,
                                   //   //textAlign: widget.lang == 'arb'?TextAlign.right:TextAlign.left,
                                   //   decoration: InputDecoration(
-                                  //     border: OutlineInputBorder(borderRadius:BorderRadius.all(Radius.circular(50)) ),
+                                  //     border: OutlineInputBorder(borderRadius:BorderRadius.all(Radius.circular(5)) ),
                                   //         labelStyle: TextStyle(fontFamily: 'Hacen'),
                                   //     labelText: ' الاسم الكامل',
                                   //     //hintText: widget.userData != null?widget.userData.get("first name"):""
@@ -726,49 +789,51 @@ class _MenuState extends State<Menu> {
                                 )
                               : Container(),
                           sms
-                              ? Container(
-                                  // height:
-                                  // MediaQuery.of(context).size.height * 0.5,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.9,
-                                  // decoration: BoxDecoration(
-                                  //   border: Border.all(
-                                  //     color: Colors.black,
-                                  //     style: BorderStyle.solid,
-                                  //     width: 0.2,
-                                  //   ),
-                                  //   color: Colors.white,
-                                  // ),
-                                  padding: EdgeInsets.all(4.0),
-                                  child: TextFormField(
-                                    style: TextStyle(fontFamily: "Hacen"),
-                                    keyboardType: TextInputType.text,
-                                    controller: _csms,
-                                    // expands: true,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    validator: (input) {
-                                      if (input!.isEmpty) {
-                                        return "فارغ";
-                                      }
-                                    },
-                                    onSaved: (input) {
-                                      setState(() {
-                                        _smsTxt = input!.trim();
-                                      });
-                                    },
-                                    // textDirection: widget.lang == 'arb'?TextDirection.rtl:TextDirection.ltr,
-                                    //textAlign: widget.lang == 'arb'?TextAlign.right:TextAlign.left,
-                                    decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(5))),
-                                        labelStyle:
-                                            TextStyle(fontFamily: 'Hacen'),
-                                        labelText: 'رسالة',
-                                        counterText: ''),
-                                  ),
-                                )
+                              ? Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Container(
+                                    // height:
+                                    // MediaQuery.of(context).size.height * 0.5,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
+                                    // decoration: BoxDecoration(
+                                    //   border: Border.all(
+                                    //     color: Colors.black,
+                                    //     style: BorderStyle.solid,
+                                    //     width: 0.2,
+                                    //   ),
+                                    color: Colors.white,
+                                    // ),
+                                    padding: EdgeInsets.all(4.0),
+                                    child: TextFormField(
+                                      style: TextStyle(fontFamily: "Hacen"),
+                                      keyboardType: TextInputType.text,
+                                      controller: _csms,
+                                      // expands: true,
+                                      maxLines: 3,
+                                      minLines: 1,
+                                      validator: (input) {
+                                        if (input!.isEmpty) {
+                                          return "فارغ";
+                                        }
+                                      },
+                                      onSaved: (input) {
+                                        setState(() {
+                                          _smsTxt = input!.trim();
+                                        });
+                                      },
+                                      // textDirection: widget.lang == 'arb'?TextDirection.rtl:TextDirection.ltr,
+                                      //textAlign: widget.lang == 'arb'?TextAlign.right:TextAlign.left,
+                                      decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                          labelStyle:
+                                              TextStyle(fontFamily: 'Hacen'),
+                                          labelText: 'رسالة',
+                                          counterText: ''),
+                                    ),
+                                  ))
                               : Container(),
                         ]),
                       )))
@@ -799,7 +864,7 @@ class _MenuState extends State<Menu> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(55.0),
                         ),
-                        color: Colors.purple,
+                        color: Colors.orange,
                         child: Center(
                           child: Text(
                             !sms ? "بحث" : "إرسال",
@@ -811,14 +876,12 @@ class _MenuState extends State<Menu> {
                           ),
                         ),
                         onPressed: () {
-                          final formState2 = _formkey2.currentState;
-                          if (formState2!.validate()) {
-                            try {
-                              NetState().isConnected().then((state) async {
+                          try {
+                            NetState().isConnected().then((state) async {
+                              final formState2 = _formkey2.currentState;
+                              if (formState2!.validate()) {
                                 if (state) {
                                   formState2.save();
-                                  rm = true;
-
                                   if (history) {
                                     dates.clear();
                                     db
@@ -873,8 +936,13 @@ class _MenuState extends State<Menu> {
                                             ),
                                             textAlign: TextAlign.center);
                                         pr.show().then((_) {
-                                          sleep().whenComplete(() => _search(
-                                              context, true, false, false));
+                                          sleep().whenComplete(() {
+                                            _search(
+                                                context, true, false, false);
+                                            setState(() {
+                                              rm = false;
+                                            });
+                                          });
                                         });
                                       });
                                     });
@@ -882,9 +950,10 @@ class _MenuState extends State<Menu> {
                                     db
                                         .getData(donater, "donaters")
                                         .then((snap) {
-                                      //print("*"*100);
-                                      //print(donater);
-                                      //print("*"*100);
+                                      setState(() {
+                                        rm = true;
+                                        donater = 'الإسم';
+                                      });
                                       if (!sms) {
                                         setState(() {
                                           _cfname.text = snap.get("fullName");
@@ -894,7 +963,6 @@ class _MenuState extends State<Menu> {
                                           _cnextPositeDate.text =
                                               snap.get("nextPositeDate");
                                           _cPrix.text = snap.get("montant");
-                                          donater = 'الإسم';
                                         });
                                       } else {
                                         if (_checkbtn) {
@@ -917,6 +985,11 @@ class _MenuState extends State<Menu> {
                                               setState(() {
                                                 donater = 'الإسم';
                                                 _csms.text = "";
+                                                _cfname.text = '';
+                                                _cphone.text = '';
+                                                _cpositeDate.text = '';
+                                                _cnextPositeDate.text = '';
+                                                _cPrix.text = '';
                                                 rm = false;
                                                 sleep();
                                               });
@@ -953,6 +1026,11 @@ class _MenuState extends State<Menu> {
                                                 setState(() {
                                                   _csms.text = "";
                                                   rm = false;
+                                                  _cfname.text = '';
+                                                  _cphone.text = '';
+                                                  _cpositeDate.text = '';
+                                                  _cnextPositeDate.text = '';
+                                                  _cPrix.text = '';
                                                   sleep();
                                                 });
                                               });
@@ -964,15 +1042,15 @@ class _MenuState extends State<Menu> {
                                     Navigator.of(context).pop();
                                   }
                                 }
-                              });
-                            } catch (e) {
-                              pr.hide().then((_) => Alert(
-                                    context: context,
-                                    title: "خطأ",
-                                    message: "تعذر الإتصال بالسرفر",
-                                    info: true,
-                                  ).show());
-                            }
+                              }
+                            });
+                          } catch (e) {
+                            pr.hide().then((_) => Alert(
+                                  context: context,
+                                  title: "خطأ",
+                                  message: "تعذر الإتصال بالسرفر",
+                                  info: true,
+                                ).show());
                           }
                         },
                       )
@@ -982,7 +1060,7 @@ class _MenuState extends State<Menu> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(55.0),
                   ),
-                  color: Colors.purple,
+                  color: Colors.orange,
                   child: Center(
                     child: new Text(
                       "إغلاق",
@@ -1019,6 +1097,8 @@ class _MenuState extends State<Menu> {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: AlertDialog(
+              backgroundColor: Color.fromARGB(255, 36, 52, 71),
+              shape: Border.all(color: Colors.orange, width: 2),
               contentPadding: EdgeInsets.all(0),
               title: Text(
                 !newDonaters
@@ -1030,7 +1110,7 @@ class _MenuState extends State<Menu> {
                   fontFamily: "Hacen",
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black),
+                  color: Colors.orange),
               content: Container(
                 height: MediaQuery.of(context).size.height * 0.8,
                 width: MediaQuery.of(context).size.width * 0.9,
@@ -1056,42 +1136,38 @@ class _MenuState extends State<Menu> {
               //   )
               // ),
               actions: <Widget>[
-                !newDonaters
-                    ? RaisedButton(
-                        padding: const EdgeInsets.all(0.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        color: Colors.purple,
-                        child: Center(
-                          child: new Text(
-                            "  إرسال SMS ",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontFamily: 'Hacen',
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                        onPressed: () {
-                          // for (var numb in DLAnumber) {
-                          //  sendSms(numb, "تذكير دفع الاشتراك بجمعية ناس الخير");
-
-                          // }
+                RaisedButton(
+                  padding: const EdgeInsets.all(0.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  color: Colors.orange,
+                  child: Center(
+                    child: new Text(
+                      !newDonaters ? "  إرسال SMS " : '   قبول الكل   ',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontFamily: 'Hacen',
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  onPressed: !newDonaters
+                      ? () {
                           pr.style(
                               message: 'تم إرسال \n ${DLA.length} SMS مشتركين',
                               progressWidget: Image.asset('images/done.gif'),
                               textAlign: TextAlign.center);
                           pr.show().whenComplete(() => sleep());
-                        },
-                      )
-                    : Container(),
+                        }
+                      : () => addAllNewDonaters(),
+                ),
                 RaisedButton(
                   padding: const EdgeInsets.all(0.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(55.0),
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
-                  color: Colors.purple,
+                  color: Colors.orange,
                   child: Center(
                     child: new Text(
                       "إغلاق",
@@ -1125,6 +1201,7 @@ class _MenuState extends State<Menu> {
           child: Directionality(
               textDirection: TextDirection.rtl,
               child: Scaffold(
+                backgroundColor: Colors.blueGrey,
                 body: Form(
                   key: _formkey,
 
@@ -1139,7 +1216,12 @@ class _MenuState extends State<Menu> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                     Container(
-                                      // margin: EdgeInsets.only(),
+                                      width: 40.0,
+                                      height: 40.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.black,
+                                      ),
                                       child: InkWell(
                                         onTap: _onBackPressed,
                                         child: Icon(
@@ -1149,12 +1231,19 @@ class _MenuState extends State<Menu> {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
+                                    const SizedBox(width: 2),
                                     Container(
-                                      // margin: EdgeInsets.only(),
+                                      width: 40.0,
+                                      height: 40.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.black,
+                                      ),
                                       child: InkWell(
                                           onTap: () => _notif(context, false),
                                           child: Stack(
+                                            alignment:
+                                                AlignmentDirectional.center,
                                             children: [
                                               Icon(
                                                 Icons.notifications,
@@ -1164,6 +1253,8 @@ class _MenuState extends State<Menu> {
                                               Positioned(
                                                   width: 20,
                                                   height: 20,
+                                                  top: 1,
+                                                  right: 2,
                                                   child: notifNum != 0
                                                       ? CircleAvatar(
                                                           child: Text(
@@ -1178,12 +1269,19 @@ class _MenuState extends State<Menu> {
                                             ],
                                           )),
                                     ),
-                                    const SizedBox(width: 10),
+                                    const SizedBox(width: 2),
                                     Container(
-                                      // margin: EdgeInsets.only(),
+                                      width: 40.0,
+                                      height: 40.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.black,
+                                      ),
                                       child: InkWell(
                                           onTap: () => _notif(context, true),
                                           child: Stack(
+                                            alignment:
+                                                AlignmentDirectional.center,
                                             children: [
                                               Icon(
                                                 Icons.people,
@@ -1193,6 +1291,8 @@ class _MenuState extends State<Menu> {
                                               Positioned(
                                                   width: 20,
                                                   height: 20,
+                                                  top: 1,
+                                                  right: 2,
                                                   child: notifNewDonaters != 0
                                                       ? CircleAvatar(
                                                           child: Text(
@@ -1207,9 +1307,14 @@ class _MenuState extends State<Menu> {
                                             ],
                                           )),
                                     ),
-                                    const SizedBox(width: 10),
+                                    const SizedBox(width: 2),
                                     Container(
-                                      // margin: EdgeInsets.only(),
+                                      width: 40.0,
+                                      height: 40.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.black,
+                                      ),
                                       child: InkWell(
                                         onTap: () => _search(
                                             context, true, false, false),
@@ -1220,9 +1325,14 @@ class _MenuState extends State<Menu> {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
+                                    const SizedBox(width: 2),
                                     Container(
-                                      // margin: EdgeInsets.only(),
+                                      width: 40.0,
+                                      height: 40.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.black,
+                                      ),
                                       child: InkWell(
                                         onTap: () => _search(
                                             context, false, false, false),
@@ -1233,9 +1343,14 @@ class _MenuState extends State<Menu> {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
+                                    const SizedBox(width: 2),
                                     Container(
-                                      // margin: EdgeInsets.only(),
+                                      width: 40.0,
+                                      height: 40.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.black,
+                                      ),
                                       child: InkWell(
                                         onTap: () =>
                                             Nav().nav(SearchAll(), context),
@@ -1246,39 +1361,73 @@ class _MenuState extends State<Menu> {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
+                                    const SizedBox(width: 2),
                                     Container(
-                                      // margin: EdgeInsets.only(),
+                                      width: 40.0,
+                                      height: 40.0,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: Colors.green,
+                                        color: Colors.black,
                                       ),
                                       child: InkWell(
-                                        onTap: () => _search(
-                                            context, false, true, false),
-                                        child: Icon(
-                                          Icons.people_alt,
-                                          size: 30,
-                                          color: Colors.white,
-                                        ),
-                                      ),
+                                          onTap: () => _search(
+                                              context, false, true, false),
+                                          child: Stack(
+                                            alignment:
+                                                AlignmentDirectional.center,
+                                            children: [
+                                              Icon(
+                                                Icons.people,
+                                                size: 30,
+                                                color: Colors.green,
+                                              ),
+                                              Positioned(
+                                                width: 20,
+                                                height: 20,
+                                                top: 1,
+                                                right: 2,
+                                                child: Icon(
+                                                  Icons.message,
+                                                  size: 20,
+                                                  color: Colors.orange,
+                                                ),
+                                              )
+                                            ],
+                                          )),
                                     ),
-                                    const SizedBox(width: 10),
+                                    const SizedBox(width: 2),
                                     Container(
-                                      // margin: EdgeInsets.only(),
+                                      width: 40.0,
+                                      height: 40.0,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: Colors.green,
+                                        color: Colors.black,
                                       ),
                                       child: InkWell(
-                                        onTap: () =>
-                                            _search(context, false, true, true),
-                                        child: Icon(
-                                          Icons.person,
-                                          size: 30,
-                                          color: Colors.white,
-                                        ),
-                                      ),
+                                          onTap: () => _search(
+                                              context, false, true, true),
+                                          child: Stack(
+                                            alignment:
+                                                AlignmentDirectional.center,
+                                            children: [
+                                              Icon(
+                                                Icons.person,
+                                                size: 30,
+                                                color: Colors.green,
+                                              ),
+                                              Positioned(
+                                                width: 20,
+                                                height: 20,
+                                                top: 1,
+                                                right: 2,
+                                                child: Icon(
+                                                  Icons.message,
+                                                  size: 20,
+                                                  color: Colors.orange,
+                                                ),
+                                              )
+                                            ],
+                                          )),
                                     ),
                                   ])
                             : Container(),
@@ -1300,7 +1449,7 @@ class _MenuState extends State<Menu> {
                                 width: 0.2,
                               ),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(50)),
+                                  BorderRadius.all(Radius.circular(5)),
                               color: Colors.blue[
                                   50]), //ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
 
@@ -1325,7 +1474,7 @@ class _MenuState extends State<Menu> {
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(50))),
+                                      BorderRadius.all(Radius.circular(5))),
                               labelStyle: TextStyle(fontFamily: 'Hacen'),
                               labelText: ' الاسم الكامل',
                               //hintText: widget.userData != null?widget.userData.get("first name"):""
@@ -1342,7 +1491,7 @@ class _MenuState extends State<Menu> {
                                 width: 0.2,
                               ),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(50)),
+                                  BorderRadius.all(Radius.circular(5)),
                               color: Colors.blue[
                                   50]), //ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
 
@@ -1367,7 +1516,7 @@ class _MenuState extends State<Menu> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(50))),
+                                        BorderRadius.all(Radius.circular(5))),
                                 labelStyle: TextStyle(fontFamily: 'Hacen'),
                                 labelText: 'رقم الهاتف',
                                 counterText: ''),
@@ -1384,7 +1533,7 @@ class _MenuState extends State<Menu> {
                                       width: 0.2,
                                     ),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(50)),
+                                        BorderRadius.all(Radius.circular(5)),
                                     color: Colors.blue[
                                         50]), //ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
 
@@ -1411,7 +1560,7 @@ class _MenuState extends State<Menu> {
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(50))),
+                                              Radius.circular(5))),
                                       labelStyle:
                                           TextStyle(fontFamily: 'Hacen'),
                                       labelText: 'تاريخ دفع الإشتراك',
@@ -1433,7 +1582,7 @@ class _MenuState extends State<Menu> {
                                       width: 0.2,
                                     ),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(50)),
+                                        BorderRadius.all(Radius.circular(5)),
                                     color: Colors.blue[
                                         50]), //ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
 
@@ -1459,7 +1608,7 @@ class _MenuState extends State<Menu> {
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(50))),
+                                              Radius.circular(5))),
                                       labelStyle:
                                           TextStyle(fontFamily: 'Hacen'),
                                       labelText: 'تاريخ تجديد الإشتراك',
@@ -1481,7 +1630,7 @@ class _MenuState extends State<Menu> {
                                       width: 0.2,
                                     ),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(50)),
+                                        BorderRadius.all(Radius.circular(5)),
                                     color: Colors.blue[
                                         50]), //ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
 
@@ -1505,7 +1654,7 @@ class _MenuState extends State<Menu> {
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(50))),
+                                            Radius.circular(5))),
                                     labelStyle: TextStyle(fontFamily: 'Hacen'),
                                     labelText: 'مبلغ الإشتراك' + '  (دج)',
                                   ),
@@ -1513,7 +1662,7 @@ class _MenuState extends State<Menu> {
                               )
                             : Container(),
                         const SizedBox(height: 20),
-                        !rm && !_sms
+                        !rm || _sms
                             ? RaisedButton(
                                 onPressed: () => _next(false),
                                 padding: const EdgeInsets.all(0.0),
@@ -1530,8 +1679,8 @@ class _MenuState extends State<Menu> {
                                         width: 0.5,
                                       ),
                                       color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(50))),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text(!widget.add ? 'حفظ' : "تسجيل",
                                         style: TextStyle(
@@ -1562,7 +1711,7 @@ class _MenuState extends State<Menu> {
                                           ),
                                           color: Colors.green,
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(50))),
+                                              Radius.circular(5))),
                                       child: Center(
                                         child: Text(
                                             !widget.add ? 'حفظ' : "تسجيل",
@@ -1592,7 +1741,7 @@ class _MenuState extends State<Menu> {
                                           ),
                                           color: Colors.redAccent[200],
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(50))),
+                                              Radius.circular(5))),
                                       child: Center(
                                         child: Text('حذف',
                                             style: TextStyle(
@@ -1626,8 +1775,8 @@ class _MenuState extends State<Menu> {
                                         width: 0.5,
                                       ),
                                       color: Colors.redAccent[200],
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(50))),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text('خروج',
                                         style: TextStyle(

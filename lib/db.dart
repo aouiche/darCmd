@@ -28,14 +28,22 @@ class DB {
     }
   }
 
-  Future<DocumentSnapshot> getData(doc, path) async {
-    await Firebase.initializeApp();
-    return await db.collection(path).doc(doc).get();
+  Future<dynamic> getData(doc, path) async {
+    try {
+      await Firebase.initializeApp();
+      return await db.collection(path).doc(doc).get();
+    } catch (e) {
+      return "error";
+    }
   }
 
-  Future<QuerySnapshot> getDatagroup(path) async {
-    await Firebase.initializeApp();
-    return await db.collection(path).get();
+  Future<dynamic> getDatagroup(path) async {
+    try {
+      await Firebase.initializeApp();
+      return await db.collection(path).get();
+    } catch (e) {
+      return "error";
+    }
   }
 
   Future<bool> setData(doc, path, Map<String, dynamic> data) async {

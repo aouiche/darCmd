@@ -241,7 +241,7 @@ class _LoginUI2State extends State<LoginUI2> {
                             elevation: 10.0,
                             // shadowColor: Colors.black45,
                             child: Container(
-                                color: Colors.indigo,
+                                color: Color.fromARGB(255, 20, 29, 38),
                                 width: MediaQuery.of(context).size.width * 0.25,
                                 padding: EdgeInsets.all(10),
                                 margin: EdgeInsets.all(0),
@@ -250,7 +250,7 @@ class _LoginUI2State extends State<LoginUI2> {
                                   "حساب جمعية ناس الخير رقان\n" +
                                       'BaridiMob: 00799999002100841241 \n CCP: 21008412 /41',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.orange,
                                   ),
                                   textAlign: TextAlign.center,
                                 ))))),
@@ -266,7 +266,7 @@ class _LoginUI2State extends State<LoginUI2> {
                               style: BorderStyle.solid,
                               width: 0.2,
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
                             color: Colors.blue[
                                 50]), //ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
 
@@ -288,7 +288,7 @@ class _LoginUI2State extends State<LoginUI2> {
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(50))),
+                                      BorderRadius.all(Radius.circular(5))),
                               labelText: ' الاسم الكامل',
                               // labelText: 'البريد الإلكتروني',
                               labelStyle: TextStyle(fontFamily: 'Hacen')),
@@ -308,7 +308,7 @@ class _LoginUI2State extends State<LoginUI2> {
                               style: BorderStyle.solid,
                               width: 0.2,
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
                             color: Colors.blue[
                                 50]), //ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
 
@@ -328,7 +328,7 @@ class _LoginUI2State extends State<LoginUI2> {
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(50))),
+                                      BorderRadius.all(Radius.circular(5))),
                               labelText: 'رقم الهاتف',
                               labelStyle: TextStyle(fontFamily: 'Hacen'),
                               counterText: ""),
@@ -339,7 +339,7 @@ class _LoginUI2State extends State<LoginUI2> {
                       //           width: 300.0,
                       //           height: 60.0,
                       //           decoration: BoxDecoration(border:Border.all(style: BorderStyle.solid,width: 0.2,),
-                      //                           borderRadius: BorderRadius.all(Radius.circular(50)),color: Colors.blue[50]) ,//ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
+                      //                           borderRadius: BorderRadius.all(Radius.circular(5)),color: Colors.blue[50]) ,//ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
 
                       //           padding: EdgeInsets.all(4.0),
                       //           child: TextFormField(
@@ -357,7 +357,7 @@ class _LoginUI2State extends State<LoginUI2> {
                       //            // textDirection: widget.lang == 'arb'?TextDirection.rtl:TextDirection.ltr,
                       //             //textAlign: widget.lang == 'arb'?TextAlign.right:TextAlign.left,
                       //             decoration: InputDecoration(
-                      //                  border: OutlineInputBorder(borderRadius:BorderRadius.all(Radius.circular(50)) ),
+                      //                  border: OutlineInputBorder(borderRadius:BorderRadius.all(Radius.circular(5)) ),
                       //                 labelText: 'كلمة المرور',
                       //               labelStyle: TextStyle(fontFamily: 'Hacen')
                       //             ),
@@ -386,7 +386,7 @@ class _LoginUI2State extends State<LoginUI2> {
                               ),
                               color: Colors.green,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(50))),
+                                  BorderRadius.all(Radius.circular(5))),
                           child: Center(
                             child: Text('دخول',
                                 style: TextStyle(
@@ -422,7 +422,7 @@ class _LoginUI2State extends State<LoginUI2> {
                               ),
                               color: Colors.white,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(50))),
+                                  BorderRadius.all(Radius.circular(5))),
                           child: Center(
                             child: Text('إشتراك جديد',
                                 style: TextStyle(

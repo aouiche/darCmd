@@ -21,10 +21,11 @@ class Alert {
             // elevation: 10.0,
             // titleTextStyle: TextStyle(color:Colors.white,fontSize: 30.0,fontFamily: 'Hacen'),
             // contentTextStyle: TextStyle(color:Colors.white,fontSize: 20.0,fontFamily: 'Hacen'),
-            // title: new Text(this.title != null ?this.title:""),
+            // title: new Text(this.title != null ? this.title : ""),
             content: Container(
               width: MediaQuery.of(context).size.width * 0.5,
               height: MediaQuery.of(context).size.height * 0.3,
+              color: Color.fromARGB(255, 36, 52, 71),
               child: Stack(fit: StackFit.expand, children: [
                 Positioned(
                   top: MediaQuery.of(context).size.height * 0.09,
@@ -33,7 +34,9 @@ class Alert {
                   child: Text(
                     this.title != null ? this.title : "",
                     style: TextStyle(
-                        fontFamily: "Hacen", color: Colors.white, fontSize: 30),
+                        fontFamily: "Hacen",
+                        color: Colors.orange,
+                        fontSize: 30),
                   ),
                 ),
                 Positioned(
@@ -43,32 +46,27 @@ class Alert {
                   child: Container(
                     height: 60,
                     padding: EdgeInsets.all(3.0),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.white,
-                          style: BorderStyle.solid,
-                          width: 0.5,
-                        ),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(55.0)),
+                    color: Color.fromARGB(255, 36, 52, 71),
                     child: Center(
                         child: Text(
                       this.message,
-                      style: TextStyle(fontFamily: "Hacen"),
+                      style:
+                          TextStyle(fontFamily: "Hacen", color: Colors.orange),
                     )),
                   ),
                 ),
               ]),
             ),
+            backgroundColor: Color.fromARGB(255, 36, 52, 71),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               this.info
                   ? RaisedButton(
                       padding: const EdgeInsets.all(0.0),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(55.0),
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
-                      color: Colors.purple,
+                      color: Colors.orange,
                       child: Center(
                         child: new Text(
                           "إغلاق",
@@ -88,9 +86,9 @@ class Alert {
                   ? RaisedButton(
                       padding: const EdgeInsets.all(0.0),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(55.0),
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
-                      color: Colors.purple,
+                      color: Colors.orange,
                       child: Center(
                         child: Text(
                           "نعم",
@@ -108,9 +106,9 @@ class Alert {
                   ? RaisedButton(
                       padding: const EdgeInsets.all(0.0),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(55.0),
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
-                      color: Colors.purple,
+                      color: Colors.orange,
                       child: Center(
                         child: new Text(
                           "لا",

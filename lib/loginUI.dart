@@ -31,7 +31,7 @@ class _LoginUIState extends State<LoginUI> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    permissions();
+    // permissions();
     pr = new ProgressDialog(context,
         isDismissible: true, type: ProgressDialogType.Normal);
   }
@@ -40,26 +40,26 @@ class _LoginUIState extends State<LoginUI> {
     return email.split('').contains("@") && email.split('').contains(".");
   }
 
-  permissions() async {
-    if (await Permission.sms.isGranted &&
-        await Permission.phone.isGranted &&
-        await Permission.contacts.isGranted) {
-      setState(() {
-        permission = true;
-      });
-    } else if (await Permission.sms.request().isGranted &&
-        await Permission.phone.request().isGranted &&
-        await Permission.contacts.request().isGranted) {
-      setState(() {
-        permission = true;
-      });
-    } else {
-      setState(() {
-        permission = false;
-        permissions();
-      });
-    }
-  }
+  // permissions() async {
+  //   if (await Permission.sms.isGranted &&
+  //       await Permission.phone.isGranted &&
+  //       await Permission.contacts.isGranted) {
+  //     setState(() {
+  //       permission = true;
+  //     });
+  //   } else if (await Permission.sms.request().isGranted &&
+  //       await Permission.phone.request().isGranted &&
+  //       await Permission.contacts.request().isGranted) {
+  //     setState(() {
+  //       permission = true;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       permission = false;
+  //       permissions();
+  //     });
+  //   }
+  // }
 
   _singIn() async {
     final formState = _formkey.currentState;
@@ -159,6 +159,11 @@ class _LoginUIState extends State<LoginUI> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      color: Colors.blueGrey,
+                    ),
                     Positioned(
                       top: 100,
                       left: 0,
@@ -181,7 +186,7 @@ class _LoginUIState extends State<LoginUI> {
                               style: BorderStyle.solid,
                               width: 0.2,
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
                             color: Colors.blue[
                                 50]), //ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
 
@@ -203,7 +208,7 @@ class _LoginUIState extends State<LoginUI> {
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(50))),
+                                      BorderRadius.all(Radius.circular(5))),
                               labelText: 'البريد الإلكتروني',
                               labelStyle: TextStyle(fontFamily: 'Hacen')),
                           style: TextStyle(fontSize: 20.0),
@@ -222,7 +227,7 @@ class _LoginUIState extends State<LoginUI> {
                               style: BorderStyle.solid,
                               width: 0.2,
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
                             color: Colors.blue[
                                 50]), //ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
 
@@ -244,7 +249,7 @@ class _LoginUIState extends State<LoginUI> {
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(50))),
+                                      BorderRadius.all(Radius.circular(5))),
                               labelText: 'كلمة المرور',
                               labelStyle: TextStyle(fontFamily: 'Hacen')),
                           style: TextStyle(fontSize: 20.0),
@@ -272,7 +277,7 @@ class _LoginUIState extends State<LoginUI> {
                               ),
                               color: Colors.green,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(50))),
+                                  BorderRadius.all(Radius.circular(5))),
                           child: Center(
                             child: Text('دخول',
                                 style: TextStyle(

@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 class SplashUI extends StatelessWidget {
   Future sleep(context) async {
     Future.delayed(const Duration(seconds: 3), () {
-      Nav().nav(
-          Menu(
-            add: false,
-          ),
-          context);
-      //  Nav().nav(LoginUI2(), context);
-      // Nav().nav(Inbox(name: 'Abdoullahi ‎Abdelwahheb ‎', phone: '0698782358'),
+      // Nav().nav(
+      //     Menu(
+      //       add: false,
+      //     ),
       //     context);
+      // Nav().nav(LoginUI2(), context);
+      Nav().nav(Inbox(name: 'Abdoullahi ‎Abdelwahheb ‎', phone: '0698782358'),
+          context);
     });
   }
 //   Navigator.of(context).push(MaterialPageRoute(
@@ -57,7 +57,7 @@ class SplashUI extends StatelessWidget {
           child: Image.asset(
             "images/loading.gif",
             width: 200,
-            height: 100,
+            height: 60,
           ),
         ),
       ],
