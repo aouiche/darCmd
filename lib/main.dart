@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:intl/intl.dart';
 void main() {
   runApp(MyApp());
 }
@@ -38,9 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
  final LocalAuthentication auth = LocalAuthentication();
  bool canCheckBiometrics = false;
  bool isAuth = false;
-
-  
-
 void _checkBiometric() async {
   final LocalAuthentication auth = LocalAuthentication();
   bool canCheckBiometrics = false;
@@ -80,8 +78,8 @@ void _checkBiometric() async {
     print("error using biometric auth: $e");
   }
   setState(() {
-    isAuth = authenticated ? true : false;
-    // isAuth = true;
+    // isAuth = authenticated ? true : false;
+    isAuth = true;
   });
 
   print("authenticated: $authenticated");
@@ -130,6 +128,14 @@ void _checkBiometric() async {
     List<bool>btnStat = [false,false,false,false,false];
     List<String>namex = ["DOOR","SALA","BED ROOM","HOLL","PUMP"];
     List<String>ipx = ["192.168.1.110","192.168.1.111","192.168.1.113","192.168.1.116","192.168.1.112"];
+ var _formkey = GlobalKey<FormState>();
+ String _email; _pwd;
+ 
+ DateTime now = DateTime.now();
+  
+  pumpTimer(){
+
+  }
 
     cmd(String ip, String order)async{
   await http.get("http://$ip:8886/$order");
@@ -181,6 +187,149 @@ List<Widget> layout(){
           ])
         );
         }
+        widgetx.add(
+          Form(
+            key: _formkey,
+            child: SingleChildScrollView(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                color: Colors.white,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      color: Colors.blueGrey,
+                    ),
+                    Positioned(
+                      top: 100,
+                      left: 0,
+                      right: 0,
+                      child: Image.asset(
+                        "images/logo.png",
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        height: MediaQuery.of(context).size.height * 0.35,
+                      ),
+                    ),
+                    Positioned(
+                      top: MediaQuery.of(context).size.height * 0.55,
+                      right: MediaQuery.of(context).size.width * 0.1,
+                      left: MediaQuery.of(context).size.width * 0.1,
+                      child: Container(
+                        width: 300.0,
+                        height: 60.0,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              style: BorderStyle.solid,
+                              width: 0.2,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: Colors.blue[
+                                50]), //ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
+
+                        padding: EdgeInsets.all(4.0),
+                        child: TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          // textDirection: TextDirection.ltr,
+                          validator: (input) {
+                            if (input!.isEmpty) {
+                              return "فارغ";
+                            }
+                          },
+                          onSaved: (input) => _email = input!.trim(),
+                          // textDirection: widget.lang == 'arb'?TextDirection.rtl:TextDirection.ltr,
+                          //textAlign: widget.lang == 'arb'?TextAlign.right:TextAlign.left,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              labelText: 'البريد الإلكتروني',
+                              labelStyle: TextStyle(fontFamily: 'Hacen')),
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: MediaQuery.of(context).size.height * 0.65,
+                      right: MediaQuery.of(context).size.width * 0.1,
+                      left: MediaQuery.of(context).size.width * 0.1,
+                      child: Container(
+                        width: 300.0,
+                        height: 60.0,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              style: BorderStyle.solid,
+                              width: 0.2,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: Colors.blue[
+                                50]), //ShapeDecoration(shape: Border.all(color: Colors.grey[350],style: BorderStyle.solid,width: 0.2,),color: Colors.grey[350],),
+
+                        padding: EdgeInsets.all(4.0),
+                        child: TextFormField(
+                          keyboardType: TextInputType.text,
+                          // textDirection: TextDirection.ltr,
+                          obscureText: true,
+                          validator: (input) {
+                            if (input!.isEmpty) {
+                              return "فارغ";
+                            } else if (input.length < 6) {
+                              return "يجب أن تكون كلمة المرور مكونة من 6 أرقام أو أكثر";
+                            }
+                          },
+                          onSaved: (input) => _pwd = input!.trim(),
+                          // textDirection: widget.lang == 'arb'?TextDirection.rtl:TextDirection.ltr,
+                          //textAlign: widget.lang == 'arb'?TextAlign.right:TextAlign.left,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              labelText: 'كلمة المرور',
+                              labelStyle: TextStyle(fontFamily: 'Hacen')),
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: MediaQuery.of(context).size.height * 0.75,
+                      right: MediaQuery.of(context).size.width * 0.1,
+                      left: MediaQuery.of(context).size.width * 0.1,
+                      child: RaisedButton(
+                        onPressed: _singIn,
+                        padding: const EdgeInsets.all(0.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(55.0),
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.all(0.0),
+                          margin: EdgeInsets.all(0),
+                          height: 50.0,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                style: BorderStyle.solid,
+                                width: 0.5,
+                              ),
+                              color: Colors.green,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Center(
+                            child: Text('دخول',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Hacen",
+                                    fontSize: 20)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
         return widgetx;
 }
   @override
