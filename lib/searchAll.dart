@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naskhir/db.dart';
+import 'package:twiza/db.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import 'menu.dart';

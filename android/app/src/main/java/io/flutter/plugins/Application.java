@@ -1,4 +1,4 @@
-package com.code.naskhir;
+package com.code.twiza;
 
 import io.flutter.app.FlutterApplication;
 import io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService;

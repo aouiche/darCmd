@@ -6,7 +6,7 @@
     "configurations": [
         
         {
-            "name": "naskhir",
+            "name": "twiza",
             "request": "launch",
             "type": "dart",
             // "deviceId": "android-arm64"

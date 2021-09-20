@@ -1,4 +1,4 @@
-package com.code.naskhir
+package com.code.twiza
 
 // import io.flutter.embedding.android.FlutterActivity 
 

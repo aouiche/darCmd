@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:naskhir/splashUI.dart';
+import 'package:twiza/splashUI.dart';
 import 'package:flutter/material.dart';
 import 'menu.dart';
 

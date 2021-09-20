@@ -2,19 +2,19 @@
 import 'dart:io';
 
 // import 'package:awesome_card/awesome_card.dart';
-// import 'package:naskhir/ads.dart';
-import 'package:naskhir/db.dart';
-import 'package:naskhir/inbox.dart';
-import 'package:naskhir/nav.dart';
-// import 'package:naskhir/phoneAuth.dart';
+// import 'package:twiza/ads.dart';
+import 'package:twiza/db.dart';
+import 'package:twiza/inbox.dart';
+import 'package:twiza/nav.dart';
+// import 'package:twiza/phoneAuth.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:naskhir/netState.dart';
-import 'package:naskhir/alert.dart';
+import 'package:twiza/netState.dart';
+import 'package:twiza/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'dart:async';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:naskhir/menu.dart';
+import 'package:twiza/menu.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:permission_handler/permission_handler.dart';
 

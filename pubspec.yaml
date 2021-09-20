@@ -1,5 +1,5 @@
-name: naskhir
-description: A new Flutter project.
+name: twiza
+description: social tool to make people easer.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -41,6 +41,7 @@ dependencies:
   dropdown_search: ^0.4.9
   # assets_audio_player:
   flutter_local_notifications: 
+  video_player: ^2.2.4
   # admob_flutter: 
   # sms_maintained: ^0.2.5
   # awesome_card:

@@ -1,16 +1,16 @@
 {
   "project_info": {
     "project_number": "616876392056",
-    "firebase_url": "https://naskhir-01.firebaseio.com",
-    "project_id": "naskhir-01",
-    "storage_bucket": "naskhir-01.appspot.com"
+    "firebase_url": "https://twiza-01.firebaseio.com",
+    "project_id": "twiza-01",
+    "storage_bucket": "twiza-01.appspot.com"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:616876392056:android:597e1de8bb46068f5db78d",
         "android_client_info": {
-          "package_name": "com.code.naskhir"
+          "package_name": "com.code.twiza"
         }
       },
       "oauth_client": [
@@ -39,7 +39,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:616876392056:android:9d038488c33017d85db78d",
         "android_client_info": {
-          "package_name": "com.example.naskhir"
+          "package_name": "com.example.twiza"
         }
       },
       "oauth_client": [
@@ -47,7 +47,7 @@
           "client_id": "616876392056-h7gt8uijpemrci8bs3cqrkm0tgtj0gkm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.naskhir",
+            "package_name": "com.example.twiza",
             "certificate_hash": "7d583837afde4d74f0bc00bfe886891054e82af2"
           }
         },

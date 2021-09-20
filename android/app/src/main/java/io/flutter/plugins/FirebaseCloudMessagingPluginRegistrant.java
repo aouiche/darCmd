@@ -1,4 +1,4 @@
-package com.code.naskhir;
+package com.code.twiza;
 
 import io.flutter.plugin.common.PluginRegistry;
 // import io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin;
