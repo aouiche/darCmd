@@ -1,6 +1,6 @@
-import 'package:naskhir/inbox.dart';
-import 'package:naskhir/loginUI.dart';
-import 'package:naskhir/loginUI2.dart';
+import 'package:twiza/inbox.dart';
+import 'package:twiza/loginUI.dart';
+import 'package:twiza/loginUI2.dart';
 
 import 'menu.dart';
 import 'nav.dart';
@@ -8,7 +8,13 @@ import 'package:flutter/material.dart';
 
 // import 'login.dart';
 
-class SplashUI extends StatelessWidget {
+class SplashUI extends StatefulWidget {
+  @override
+  _SplashUIState createState() => _SplashUIState();
+}
+
+class _SplashUIState extends State<SplashUI> {
+  VideoPlayerController _controller;
   Future sleep(context) async {
     Future.delayed(const Duration(seconds: 3), () {
       // Nav().nav(
@@ -21,46 +27,36 @@ class SplashUI extends StatelessWidget {
           context);
     });
   }
-//   Navigator.of(context).push(MaterialPageRoute(
-//               builder: (BuildContext context)=> new Login()
-//           )));
-// }
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.network(
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
     sleep(context);
-    return Scaffold(
-        body: Stack(
-      fit: StackFit.expand,
-      children: [
-        Image.asset(
-          "images/splash.png",
-          fit: BoxFit.fill,
-        ),
-        // Positioned(
-        //   top: MediaQuery.of(context).size.height*0.5,
-        //   left: MediaQuery.of(context).size.width*0.15,
-        //   child:
-        //   Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //     children: [
-        //    Text("ناس الخير",style: TextStyle(fontFamily: "Hacen",fontSize: 40,color: Colors.white,fontWeight: FontWeight.w800),),
-        //    Text("dz",style: TextStyle(fontFamily: "Com",fontSize: 40,color: Colors.white,fontWeight: FontWeight.normal),),
+    return MaterialApp(
+      title: 'Video Demo',
+      home:  Center(
+          child: _controller.value.isInitialized
+              ? AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
+                )
+        );
+   
+    );
+  }
 
-        //     ],
-        //   )
-        //   ),
-
-        Positioned(
-          top: MediaQuery.of(context).size.height * 0.65,
-          left: 0,
-          right: 0,
-          child: Image.asset(
-            "images/loading.gif",
-            width: 200,
-            height: 60,
-          ),
-        ),
-      ],
-    ));
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 }
