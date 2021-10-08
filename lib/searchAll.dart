@@ -29,7 +29,7 @@ class _SearchAllState extends State<SearchAll> {
           textAlign: TextAlign.center);
       pr.show().then((_) {
         int i = 1;
-        for (var item in snap.docs) {
+        for (var item in snap!.docs) {
           db.getData(item.id.toString(), "donaters").then((snapx) {
             setState(() {
               DLA.add(Card(
@@ -43,11 +43,11 @@ class _SearchAllState extends State<SearchAll> {
                       backgroundColor: Colors.blue,
                     ), //Text(i.toString(),style: TextStyle(fontSize: 15.0),),
                     title: Column(children: [
-                      Text(snapx.id,
+                      Text(snapx!.id,
                           style: TextStyle(
                               fontSize: 20.0, fontWeight: FontWeight.bold)),
                       Text(
-                        snapx.get("phone"),
+                        snapx!.get("phone"),
                         style: TextStyle(fontSize: 18.0),
                       ),
                       Column(children: [
@@ -78,22 +78,22 @@ class _SearchAllState extends State<SearchAll> {
     List<Widget> subDLA = [];
     db.getDatagroup("donaters/${id}/dates").then((snapxx) {
       setState(() {
-        for (var items in snapxx.docs) {
+        for (var items in snapxx!.docs) {
           db.getData(items.id, "donaters/${id}/dates").then((sna) {
             String prix = "";
-            if (sna.data().keys.contains('montant')) {
-              prix = sna.get('montant');
+            if (sna!.data()!.keys.contains('montant')) {
+              prix = sna!.get('montant');
             }
             if ((items.id == "بداية الإشتراك" &&
-                    sna.get("nextPositeDate") == "بداية الإشتراك") ||
-                (items.id.isEmpty && sna.get("nextPositeDate") == null)) {
+                    sna!.get("nextPositeDate") == "بداية الإشتراك") ||
+                (items.id.isEmpty && sna!.get("nextPositeDate") == null)) {
               subDLA.add(Text(
                 "بداية الإشتراك  :  نهاية الإشتراك",
                 style: TextStyle(fontSize: 14, color: Colors.black),
               ));
             } else {
               subDLA.add(Text(
-                "${items.id}  :  ${sna.get("nextPositeDate")} \n مبلغ الإشتراك: $prix\n" +
+                "${items.id}  :  ${sna!.get("nextPositeDate")} \n مبلغ الإشتراك: $prix\n" +
                     "_" * 30,
                 style: TextStyle(fontSize: 14, color: Colors.black),
               ));
@@ -107,11 +107,7 @@ class _SearchAllState extends State<SearchAll> {
   }
 
   _onBackPressed() {
-    Nav().nav(
-        Menu(
-          add: false,
-        ),
-        context);
+    Nav().nav(Menu(), context);
     //  Navigator.of(context).push(new MaterialPageRoute(
     // builder: (BuildContext context)=> new LoginUI()));
   }

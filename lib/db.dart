@@ -8,41 +8,54 @@ class DB {
 
   Future<dynamic> login(_email, _pwd) async {
     try {
-      await Firebase.initializeApp();
-      return (await _auth.signInWithEmailAndPassword(
-              email: _email, password: _pwd))
-          .user;
-    } catch (e) {
-      return "error";
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: _email, password: _pwd);
+      return userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return "لم يتم العثور على مستخدم لهذا البريد الإلكتروني.";
+      } else if (e.code == 'wrong-password') {
+        return "كلمة مرور خاطئة لهذا المستخدم";
+      }
     }
   }
 
   Future<dynamic> signup(_email, _pwd) async {
     try {
-      await Firebase.initializeApp();
-      return (await _auth.createUserWithEmailAndPassword(
-              email: _email, password: _pwd))
-          .user;
+      // UserCredential userCredential =
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: _email, password: _pwd);
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null && !user.emailVerified) {
+        await user.sendEmailVerification();
+      }
+      return "تم إرسال البريد الإلكتروني للتحقق";
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return 'كلمة المرور المقدمة ضعيفة للغاية.';
+      } else if (e.code == 'email-already-in-use') {
+        return 'الحساب موجود بالفعل لهذا البريد الإلكتروني.';
+      }
     } catch (e) {
-      return "error";
+      print(e);
     }
   }
 
-  Future<dynamic> getData(doc, path) async {
+  Future<DocumentSnapshot?> getData(doc, path) async {
     try {
       await Firebase.initializeApp();
       return await db.collection(path).doc(doc).get();
     } catch (e) {
-      return "error";
+      return null;
     }
   }
 
-  Future<dynamic> getDatagroup(path) async {
+  Future<QuerySnapshot?> getDatagroup(path) async {
     try {
       await Firebase.initializeApp();
       return await db.collection(path).get();
     } catch (e) {
-      return "error";
+      return null;
     }
   }
 
@@ -51,7 +64,7 @@ class DB {
       await Firebase.initializeApp();
       await db.collection(path).doc(doc).set(data);
       return true;
-    } catch (_) {
+    } catch (e) {
       return false;
     }
   }

@@ -78,11 +78,7 @@ class _LoginUIState extends State<LoginUI> {
               db.login(_email, _pwd).then((user) {
                 if (user != "error") {
                   pr.hide();
-                  Nav().nav(
-                      Menu(
-                        add: false,
-                      ),
-                      context);
+                  Nav().nav(Menu(), context);
                   // Navigator.of(context).push(MaterialPageRoute(
                   //     builder: (BuildContext context)=> new Menu(user:user)
                   // ));

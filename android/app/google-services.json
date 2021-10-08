@@ -1,71 +1,41 @@
 {
   "project_info": {
-    "project_number": "616876392056",
-    "firebase_url": "https://twiza-01.firebaseio.com",
-    "project_id": "twiza-01",
-    "storage_bucket": "twiza-01.appspot.com"
+    "project_number": "1018537219999",
+    "project_id": "twiza-ec6c8",
+    "storage_bucket": "twiza-ec6c8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:616876392056:android:597e1de8bb46068f5db78d",
+        "mobilesdk_app_id": "1:1018537219999:android:11086c87dbde4aaf040faa",
         "android_client_info": {
           "package_name": "com.code.twiza"
         }
       },
       "oauth_client": [
         {
-          "client_id": "616876392056-rav40dr0afn32f2o360l63h6bl479dd4.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBDjePkHlMegWSigagcRlSrBvuJTxkUsHk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "616876392056-rav40dr0afn32f2o360l63h6bl479dd4.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:616876392056:android:9d038488c33017d85db78d",
-        "android_client_info": {
-          "package_name": "com.example.twiza"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "616876392056-h7gt8uijpemrci8bs3cqrkm0tgtj0gkm.apps.googleusercontent.com",
+          "client_id": "1018537219999-b8ne56i3n8soqerscgm2pt8kh92v3f84.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.twiza",
+            "package_name": "com.code.twiza",
             "certificate_hash": "7d583837afde4d74f0bc00bfe886891054e82af2"
           }
         },
         {
-          "client_id": "616876392056-rav40dr0afn32f2o360l63h6bl479dd4.apps.googleusercontent.com",
+          "client_id": "1018537219999-87ulajauuelpuhdm659b3knht6a6bl3p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBDjePkHlMegWSigagcRlSrBvuJTxkUsHk"
+          "current_key": "AIzaSyD6sj3SFBAyIlWT5Ozv_V3E5S3heaD_Ibo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "616876392056-rav40dr0afn32f2o360l63h6bl479dd4.apps.googleusercontent.com",
+              "client_id": "1018537219999-87ulajauuelpuhdm659b3knht6a6bl3p.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

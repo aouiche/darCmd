@@ -20,10 +20,10 @@
         android:name="io.flutter.app.FlutterApplication"-->
     <application
         android:name=".Application"
-        android:label="غيث"
+        android:label="TWIZA"
         android:icon="@mipmap/ic_launcher">
      <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyDpbFtT05QWxHJa-6DfYfxnIZKF6EIwN9Q"/>
+               android:value="AIzaSyD6sj3SFBAyIlWT5Ozv_V3E5S3heaD_Ibo"/>
     <meta-data
   android:name="com.google.firebase.messaging.default_notification_channel_id"
   android:value="high_importance_channel" />
@@ -46,9 +46,9 @@
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
-              <meta-data
+              <!-- <meta-data
       android:name="com.google.android.gms.ads.APPLICATION_ID"
-      android:value="ca-app-pub-7073082185265481~6785945217"/>
+      android:value="ca-app-pub-7073082185265481~6785945217"/> -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
