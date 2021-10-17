@@ -9,7 +9,7 @@ import 'package:video_player/video_player.dart';
 
 import 'menu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login/src/widgets/auth_card.dart';
+import 'package:twiza/login/example/lib//src/widgets/auth_card.dart';
 
 // import 'login.dart';
 

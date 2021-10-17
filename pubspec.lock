@@ -2,14 +2,14 @@
 # See https://dart.dev/tools/pub/glossary#lockfile
 packages:
   another_flushbar:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: another_flushbar
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.24"
   another_transformer_page_view:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: another_transformer_page_view
       url: "https://pub.dartlang.org"
@@ -230,13 +230,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
-  flutter_login:
-    dependency: "direct main"
-    description:
-      name: flutter_login
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.1"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -255,7 +248,7 @@ packages:
     source: sdk
     version: "0.0.0"
   font_awesome_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: font_awesome_flutter
       url: "https://pub.dartlang.org"
@@ -388,7 +381,7 @@ packages:
     source: hosted
     version: "2.0.3"
   pedantic:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: pedantic
       url: "https://pub.dartlang.org"
@@ -451,7 +444,7 @@ packages:
     source: hosted
     version: "5.0.0"
   quiver:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: quiver
       url: "https://pub.dartlang.org"

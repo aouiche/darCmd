@@ -6,10 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import '../../../constants.dart';
 
 class RecentFiles extends StatelessWidget {
-  const RecentFiles({
-    Key? key,
-  }) : super(key: key);
-
+  RecentFiles({Key? key, required this.demoRecentFiles}) : super(key: key);
+  final List demoRecentFiles;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,17 +26,25 @@ class RecentFiles extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: DataTable2(
-              columnSpacing: defaultPadding,
-              minWidth: 600,
+              columnSpacing: 1.0,
+              horizontalMargin: 1.0,
+              minWidth: 420,
+              dataTextStyle: TextStyle(fontSize: 13, fontFamily: "hacen"),
               columns: [
                 DataColumn(
-                  label: Text("File Name"),
+                  label: Text("إسم العنصر"),
                 ),
                 DataColumn(
-                  label: Text("Date"),
+                  label: Text("الكمية"),
                 ),
                 DataColumn(
-                  label: Text("Size"),
+                  label: Text("اللون"),
+                ),
+                DataColumn(
+                  label: Text("الحجم"),
+                ),
+                DataColumn(
+                  label: Text("الحالة"),
                 ),
               ],
               rows: List.generate(
@@ -61,18 +67,20 @@ DataRow recentFileDataRow(RecentFile fileInfo) {
           children: [
             SvgPicture.asset(
               fileInfo.icon!,
-              height: 30,
-              width: 30,
+              height: 20,
+              width: 20,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
               child: Text(fileInfo.title!),
             ),
           ],
         ),
       ),
-      DataCell(Text(fileInfo.date!)),
+      DataCell(Text(fileInfo.quantity!)),
+      DataCell(Text(fileInfo.color!)),
       DataCell(Text(fileInfo.size!)),
+      DataCell(Text(fileInfo.state!)),
     ],
   );
 }

@@ -42,7 +42,7 @@ dependencies:
   # assets_audio_player:
   flutter_local_notifications: ^8.0.0
   video_player: 
-  flutter_login: 
+  # flutter_login: 
   # page_transition: ^2.0.4
   internet_connection_checker: ^0.0.1+2
   # connectivity: ^3.0.6
@@ -54,6 +54,13 @@ dependencies:
   # admob_flutter: 
   # sms_maintained: ^0.2.5
   # awesome_card:
+  font_awesome_flutter: ^9.0.0
+  another_transformer_page_view: ^1.0.1
+  another_flushbar: ^1.10.23
+
+  # flutter_test from sdk depends on quiver
+  quiver: ^3.0.1
+  pedantic: ^1.11.0 
     
 
 dev_dependencies:

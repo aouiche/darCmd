@@ -444,7 +444,7 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_login/flutter_login.dart';
+import 'package:twiza/login/example/lib/flutter_login.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:twiza/db.dart';
 
@@ -485,6 +485,13 @@ class _LoginUI2State extends State<LoginUI2> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    DB().login("abideaiche07@gmail.com", "123456").then((msg) {
+      Nav().nav(Inbox(auth: msg), context);
+    });
+  }
   // Future sleep() {
   //   return new Future.delayed(const Duration(seconds: 3), () => Alert().hide());
   // }

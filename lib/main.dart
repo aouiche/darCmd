@@ -2,6 +2,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:twiza/constants.dart';
 import 'package:twiza/inbox.dart';
+import 'package:twiza/loginUI2.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:twiza/splashUI.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,8 @@ class MyApp extends StatelessWidget {
       // '/menu' : (BuildContext context) => new Menu(add:false),
       //   '/terms' : (BuildContext context) => new Conditions(),
       // },, // MyHomePage(),
-      home: SplashUI(), // MyHomePage(),
+      // home: SplashUI(), // MyHomePage(),
+      home: LoginUI2(), // MyHomePage(),
     );
   }
 }

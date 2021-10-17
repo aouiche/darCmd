@@ -8,10 +8,13 @@ class FileInfoCard extends StatelessWidget {
   const FileInfoCard({
     Key? key,
     required this.info,
+    required this.percentage,
+    required this.detailIcon(),
   }) : super(key: key);
 
   final CloudStorageInfo info;
-
+  final int percentage;
+  final Function detailIcon;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,7 +43,9 @@ class FileInfoCard extends StatelessWidget {
                   color: info.color,
                 ),
               ),
-              Icon(Icons.more_vert, color: Colors.white54)
+              InkWell(
+                  onTap: () => detailIcon(),
+                  child: Icon(Icons.list_alt_sharp, color: Colors.white54))
             ],
           ),
           Text(
@@ -50,20 +55,20 @@ class FileInfoCard extends StatelessWidget {
           ),
           ProgressLine(
             color: info.color,
-            percentage: info.percentage,
+            percentage: percentage,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "${info.numOfFiles} Files",
+                "الكمية:  ${info.numOfFiles}",
                 style: Theme.of(context)
                     .textTheme
                     .caption!
                     .copyWith(color: Colors.white70),
               ),
               Text(
-                info.totalStorage!,
+                info.percentage.toString() + "%",
                 style: Theme.of(context)
                     .textTheme
                     .caption!

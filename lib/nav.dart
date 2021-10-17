@@ -5,7 +5,7 @@ class Nav {
     Navigator.pushAndRemoveUntil(
         context,
         PageRouteBuilder(
-          transitionDuration: Duration(seconds: 2),
+          transitionDuration: Duration(microseconds: 500),
           pageBuilder: (
             BuildContext context,
             Animation<double> animation,
@@ -26,10 +26,11 @@ class Nav {
             ).animate(
               CurvedAnimation(
                 parent: animation,
-                curve: Curves.linear,
+                curve: Curves.ease,
               ),
             ),
             child: child,
+            filterQuality: FilterQuality.high,
           ),
         ),
         (Route<dynamic> route) => false);

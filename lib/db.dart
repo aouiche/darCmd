@@ -44,7 +44,10 @@ class DB {
   Future<DocumentSnapshot?> getData(doc, path) async {
     try {
       await Firebase.initializeApp();
-      return await db.collection(path).doc(doc).get();
+      return await db
+          .collection(path)
+          .doc(doc)
+          .get(GetOptions(source: Source.server));
     } catch (e) {
       return null;
     }
